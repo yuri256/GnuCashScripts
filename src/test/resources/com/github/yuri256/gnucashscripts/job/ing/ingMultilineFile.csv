@@ -1,0 +1,3 @@
+"Datum";"Naam / Omschrijving";"Rekening";"Tegenrekening";"Code";"Af Bij";"Bedrag (EUR)";"Mutatiesoort";"Mededelingen";"Saldo na mutatie";"Tag"
+"20200307";"JUMBO Bla NLD";"NL03INGB0123456789";"";"BA";"Af";"12,34";"Betaalautomaat";"Pasvolgnr: 001 07-03-2020 09:34 Transactie: A111B2 Term: AB1234 Valutadatum: 07-03-2020";"23,45";""
+"20200101";"ALBERT HEIJN Bla NLD";"NL03INGB0123456789";"";"BA";"Af";"22,22";"Betaalautomaat";"Pasvolgnr: 001 31-12-2019 19:10 Transactie: A222B3 Term: C5D678 Valutadatum: 01-01-2020";"33,33";""

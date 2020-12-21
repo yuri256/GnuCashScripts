@@ -1,0 +1,24 @@
+# Config file in Java property file format
+
+#
+# Mandatory. Base directory for all the import job directories. Recommended value: subdirectory import in your GNU Cash file directory.
+#
+baseDir=/var/gnuCash/import
+
+#
+# Mandatory for matching downloaded files and moving them to the appropriate job dir. Typical downloads directory where the incoming files will be downloaded.
+#
+downloadsDir=/home/<user>/Downloads
+
+#
+# Optional. Subdirectory names
+#
+gnuCashDirName=gnuCash
+ingDirName=ing
+abnDirName=abn
+
+#
+# Optional. Fields to skip from description when generating MT940 for ING import
+# Known values: Kenmerk,Incassant ID,Machtiging ID,IBAN,MutatieSoort,TegenRekening
+#
+#ingDescriptionSkipFields=Kenmerk,Incassant ID,Machtiging ID
