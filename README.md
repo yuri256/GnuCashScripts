@@ -19,7 +19,7 @@ Following sections will describe how to run the scripts using both ways
     ...
     ```
     In this case java runtime environment of version 14 is installed.
- 2. Download the jar file from the [Releases](/releases) section
+ 2. Download the jar file from the Releases section
  3. Run the utility (help):
    ```java -jar gnuCashScripts.jar```
 ### Convert ING CSV / AbnAmro MT940 file
