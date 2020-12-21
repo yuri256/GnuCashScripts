@@ -20,7 +20,7 @@ public class AbnFile implements Runnable {
         if (!inFile.exists()) {
             throw new RuntimeException("File " + inFile + " not found.");
         }
-        File outFile = new File(inFile + ".out");
+        File outFile = new File(inFile + ".mt940");
         if (outFile.exists()) {
             System.out.println("Output file " + outFile.getPath() + " exists, will remove it.");
             if (!outFile.delete()) {
