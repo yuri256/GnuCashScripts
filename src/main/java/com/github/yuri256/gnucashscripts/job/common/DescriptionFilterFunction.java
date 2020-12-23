@@ -22,7 +22,7 @@ public class DescriptionFilterFunction implements Function<String, String> {
     private final Set<String> removeKeyKeys;
     private final Set<String> keysWithSpace;
 
-    public DescriptionFilterFunction(Set<String> removeFieldKeys, Set<String> removeKeyFields) {
+    public DescriptionFilterFunction(Set<String> removeFieldKeys, Set<String> removeKeyKeys) {
         this.removeFieldKeys = Collections.unmodifiableSet(removeFieldKeys);
         keysWithSpace = Stream.concat(
                 Stream.concat(
@@ -30,7 +30,7 @@ public class DescriptionFilterFunction implements Function<String, String> {
                         AbnConstants.KNOWN_FIELDS_WITH_SPACE.stream()),
                 this.removeFieldKeys.stream().filter(it -> it.contains(" "))
         ).collect(Collectors.toUnmodifiableSet());
-        removeKeyKeys = removeKeyFields;
+        this.removeKeyKeys = removeKeyKeys;
     }
 
     @Override

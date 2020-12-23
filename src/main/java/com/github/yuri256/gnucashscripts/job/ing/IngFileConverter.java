@@ -2,7 +2,6 @@ package com.github.yuri256.gnucashscripts.job.ing;
 
 import com.github.yuri256.gnucashscripts.job.FileConverter;
 import com.github.yuri256.gnucashscripts.job.common.DescriptionFilterFunction;
-import com.github.yuri256.gnucashscripts.job.ing.model.IngConstants;
 import com.github.yuri256.gnucashscripts.job.ing.model.IngRecord;
 import com.github.yuri256.gnucashscripts.model.SimpleMt940Record;
 import com.prowidesoftware.swift.io.RJEWriter;
@@ -11,21 +10,20 @@ import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class IngFileConverter implements FileConverter {
 
-    private final Set<String> descriptionRemoveFieldKeys;
+    private final DescriptionConverter descriptionConverter;
 
-    public IngFileConverter(Set<String> descriptionRemoveFieldKeys) {
-        this.descriptionRemoveFieldKeys = descriptionRemoveFieldKeys;
+    public IngFileConverter(DescriptionFilterFunction descriptionFilterFunction) {
+        descriptionConverter = new DescriptionConverter(descriptionFilterFunction);
     }
 
     @Override
     public void apply(Path inPath, Path outPath) throws IOException {
         List<IngRecord> ingRecords = CsvFileReader.readFile(inPath);
-        SimpleMt940Converter converter = new SimpleMt940Converter(new DescriptionConverter(new DescriptionFilterFunction(descriptionRemoveFieldKeys, IngConstants.DEFAULT_REMOVE_KEY_KEYS)));
+        SimpleMt940Converter converter = new SimpleMt940Converter(descriptionConverter);
         List<SimpleMt940Record> mtRecords = ingRecords.stream().map(converter).collect(Collectors.toList());
         List<MT940> finalRecords = mtRecords.stream().map(SimpleMt940Record::getMT940).collect(Collectors.toList());
 

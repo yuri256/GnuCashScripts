@@ -15,11 +15,13 @@ class DescriptionConverterTest {
         String record = createConverter().apply(new IngRecord("20010304", "Test Name-Desc", "TestRekening", "TestTegenRekening", "BA", AfBij.Af, "12,34", "Betaalautomaat", "Pasvolgnr: 001 07-03-2020 09:34 Transactie: A111B2 Term: AB1234 Valutadatum: 07-03-2020"));
         Assertions.assertEquals("Test Name-Desc Datum/Tijd: 07-03-2020 09:34", record);
     }
+
     @Test
     public void testGeldautomaatWithdrawal() {
         String record = createConverter().apply(new IngRecord("20010304", "Test Name-Desc", "TestRekening", "TestTegenRekening", "BA", AfBij.Af, "12,34", "Geldautomaat", "Pasvolgnr: 001 07-03-2020 09:34 Transactie: A111B2 Term: AB1234 Valutadatum: 07-03-2020"));
         Assertions.assertEquals("Test Name-Desc Datum/Tijd: 07-03-2020 09:34 MutatieSoort: Geldautomaat", record);
     }
+
     @Test
     public void testInternalTransfer() {
         String record = createConverter().apply(new IngRecord("20010304", "Hr J DOE", "NL03TestRekening", "", "GT", AfBij.Bij, "12,34", "Online bankieren", "Van Spaarrekening 123456789 the description Valutadatum: 12-03-2020"));
@@ -63,7 +65,10 @@ class DescriptionConverterTest {
     }
 
     private DescriptionConverter createConverter() {
-        return new DescriptionConverter(new DescriptionFilterFunction(Set.of("Kenmerk", "Incassant ID", "Machtiging ID"), Set.of(IngConstants.NAAM_OMSCHRIJVING, IngConstants.NAAM, IngConstants.OMSCHRIJVING)));
+        Set<String> removeFieldKeys = Set.of("Kenmerk", "Incassant ID", "Machtiging ID");
+        Set<String> removeKeyKeys = Set.of(IngConstants.NAAM_OMSCHRIJVING, IngConstants.NAAM, IngConstants.OMSCHRIJVING);
+        DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
+        return new DescriptionConverter(filterFunction);
     }
 
 }

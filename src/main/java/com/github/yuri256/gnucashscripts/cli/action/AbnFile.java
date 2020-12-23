@@ -7,6 +7,8 @@ import com.github.yuri256.gnucashscripts.job.abn.model.AbnConstants;
 import com.github.yuri256.gnucashscripts.job.common.DescriptionFilterFunction;
 import picocli.CommandLine;
 
+import java.util.Set;
+
 @CommandLine.Command(name = "abnfile", description = "Convert ABN MT940 file to MT940 file accepted by GnuCash")
 public class AbnFile implements Runnable {
 
@@ -15,7 +17,9 @@ public class AbnFile implements Runnable {
 
     @Override
     public void run() {
-        DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(AbnConstants.DEFAULT_REMOVE_FIELD_KEYS, AbnConstants.DEFAULT_REMOVE_KEY_KEYS);
+        Set<String> removeFieldKeys = AbnConstants.DEFAULT_REMOVE_FIELD_KEYS;
+        Set<String> defaultRemoveKeyKeys = AbnConstants.DEFAULT_REMOVE_KEY_KEYS;
+        DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(removeFieldKeys, defaultRemoveKeyKeys);
         FileConverter fileConverter = new AbnFileConverter(filterFunction);
         SimpleFileJob fileJob = new SimpleFileJob(fileConverter);
         fileJob.run(file);
