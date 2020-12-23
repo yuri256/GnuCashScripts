@@ -6,7 +6,7 @@ import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 /**
  * Minimal Mt940 record
  */
-public class SimpleMt940Record {
+public class MyMt940Record {
 // https://web.archive.org/web/20160725042101/http://www.societegenerale.rs/fileadmin/template/main/pdf/SGS%20MT940.pdf
 // https://www.paiementor.com/swift-mt940-customer-statement-detailed-analysis/
 
@@ -25,7 +25,7 @@ public class SimpleMt940Record {
 //    Field :64: Closing Available Balance
 //    Field :65: Forward Value Balance
 
-    public SimpleMt940Record(String accountNumber, String description, String statementLine) {
+    public MyMt940Record(String accountNumber, String description, String statementLine) {
         this.accountNumber = accountNumber;
         this.description = description;
         this.statementLine = statementLine;

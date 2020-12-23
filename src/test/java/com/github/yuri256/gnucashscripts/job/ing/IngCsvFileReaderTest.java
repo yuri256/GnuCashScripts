@@ -10,11 +10,11 @@ import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.List;
 
-class CsvFileReaderTest {
+class IngCsvFileReaderTest {
 
     @Test
     public void testRead() throws URISyntaxException, FileNotFoundException {
-        List<IngRecord> ingRecords = CsvFileReader.readFile(Paths.get(getClass().getResource("ingMultilineFile.csv").toURI()));
+        List<IngRecord> ingRecords = IngCsvFileReader.readFile(Paths.get(getClass().getResource("ingMultilineFile.csv").toURI()));
         Assertions.assertAll(
                 () -> Assertions.assertEquals(2, ingRecords.size()),
 

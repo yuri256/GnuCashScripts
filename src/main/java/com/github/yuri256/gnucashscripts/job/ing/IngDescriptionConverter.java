@@ -8,11 +8,11 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.function.Function;
 
-public class DescriptionConverter implements Function<IngRecord, String> {
+public class IngDescriptionConverter implements Function<IngRecord, String> {
 
     private final DescriptionFilterFunction descriptionFilterFunction;
 
-    public DescriptionConverter(DescriptionFilterFunction descriptionFilterFunction) {
+    public IngDescriptionConverter(DescriptionFilterFunction descriptionFilterFunction) {
         this.descriptionFilterFunction = descriptionFilterFunction;
     }
 

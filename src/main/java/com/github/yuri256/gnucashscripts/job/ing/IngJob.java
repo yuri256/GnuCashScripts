@@ -19,7 +19,7 @@ public class IngJob extends CompleteJob {
         Set<String> removeFieldKeys = Arrays.stream(config.get(Property.ING_DESCRIPTION_SKIP_FIELDS).trim().split(",")).collect(Collectors.toSet());
         Set<String> removeKeyKeys = IngConstants.DEFAULT_REMOVE_KEY_KEYS;
         DescriptionFilterFunction descriptionFilterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
-        IngFileConverter fileConverter = new IngFileConverter(descriptionFilterFunction);
+        IngFileConverter fileConverter = new IngFileConverter(new IngMyMt940Converter(new IngDescriptionConverter(descriptionFilterFunction)));
         return new IngJob(baseDir, jobDirName, nextJobDirName, fileConverter);
     }
 

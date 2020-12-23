@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CsvFileReader {
+public class IngCsvFileReader {
     public static List<IngRecord> readFile(Path inPath) throws FileNotFoundException {
         // https://stackabuse.com/libraries-for-reading-and-writing-csvs-in-java/
         FileReader reader = new FileReader(inPath.toFile());

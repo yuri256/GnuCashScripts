@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-class DescriptionConverterTest {
+class IngDescriptionConverterTest {
     @Test
     public void testTerminalPayment() {
         String record = createConverter().apply(new IngRecord("20010304", "Test Name-Desc", "TestRekening", "TestTegenRekening", "BA", AfBij.Af, "12,34", "Betaalautomaat", "Pasvolgnr: 001 07-03-2020 09:34 Transactie: A111B2 Term: AB1234 Valutadatum: 07-03-2020"));
@@ -64,11 +64,11 @@ class DescriptionConverterTest {
         Assertions.assertEquals("J DOE IBAN: TestRekening For Abn recurring payments IBAN: NL03TestIban MutatieSoort: Online bankieren", record);
     }
 
-    private DescriptionConverter createConverter() {
+    private IngDescriptionConverter createConverter() {
         Set<String> removeFieldKeys = Set.of("Kenmerk", "Incassant ID", "Machtiging ID");
         Set<String> removeKeyKeys = Set.of(IngConstants.NAAM_OMSCHRIJVING, IngConstants.NAAM, IngConstants.OMSCHRIJVING);
         DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
-        return new DescriptionConverter(filterFunction);
+        return new IngDescriptionConverter(filterFunction);
     }
 
 }

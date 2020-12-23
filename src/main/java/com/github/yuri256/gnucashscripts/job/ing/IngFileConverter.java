@@ -1,9 +1,8 @@
 package com.github.yuri256.gnucashscripts.job.ing;
 
 import com.github.yuri256.gnucashscripts.job.FileConverter;
-import com.github.yuri256.gnucashscripts.job.common.DescriptionFilterFunction;
 import com.github.yuri256.gnucashscripts.job.ing.model.IngRecord;
-import com.github.yuri256.gnucashscripts.model.SimpleMt940Record;
+import com.github.yuri256.gnucashscripts.model.MyMt940Record;
 import com.prowidesoftware.swift.io.RJEWriter;
 import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 
@@ -14,22 +13,21 @@ import java.util.stream.Collectors;
 
 public class IngFileConverter implements FileConverter {
 
-    private final DescriptionConverter descriptionConverter;
+    private final IngMyMt940Converter myMt940Converter;
 
-    public IngFileConverter(DescriptionFilterFunction descriptionFilterFunction) {
-        descriptionConverter = new DescriptionConverter(descriptionFilterFunction);
+    public IngFileConverter(IngMyMt940Converter myMt940Converter) {
+        this.myMt940Converter = myMt940Converter;
     }
 
     @Override
     public void apply(Path inPath, Path outPath) throws IOException {
-        List<IngRecord> ingRecords = CsvFileReader.readFile(inPath);
-        SimpleMt940Converter converter = new SimpleMt940Converter(descriptionConverter);
-        List<SimpleMt940Record> mtRecords = ingRecords.stream().map(converter).collect(Collectors.toList());
-        List<MT940> finalRecords = mtRecords.stream().map(SimpleMt940Record::getMT940).collect(Collectors.toList());
+        List<IngRecord> ingRecords = IngCsvFileReader.readFile(inPath);
+        List<MyMt940Record> myMt940Records = ingRecords.stream().map(myMt940Converter).collect(Collectors.toList());
+        List<MT940> mt940Records = myMt940Records.stream().map(MyMt940Record::getMT940).collect(Collectors.toList());
 
         StringWriter stringWriter = new StringWriter();
         RJEWriter writer = new RJEWriter(stringWriter);
-        for (MT940 record : finalRecords) {
+        for (MT940 record : mt940Records) {
             writer.write(record);
         }
         writer.close();
@@ -47,6 +45,5 @@ public class IngFileConverter implements FileConverter {
             }
         });
         bw.close();
-
     }
 }
