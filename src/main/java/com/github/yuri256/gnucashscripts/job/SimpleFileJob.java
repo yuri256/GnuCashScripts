@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class SimpleFileJob {
-    private final FileConverter ingFileConverter;
+    private final FileConverter fileConverter;
 
-    public SimpleFileJob(FileConverter ingFileConverter) {
-        this.ingFileConverter = ingFileConverter;
+    public SimpleFileJob(FileConverter fileConverter) {
+        this.fileConverter = fileConverter;
     }
 
     public void run(String file) {
@@ -23,7 +23,7 @@ public class SimpleFileJob {
             }
         }
         try {
-            ingFileConverter.apply(inFile.toPath(), outFile.toPath());
+            fileConverter.apply(inFile.toPath(), outFile.toPath());
         } catch (IOException e) {
             throw new RuntimeException("Error during run: " + e.getMessage());
         }
