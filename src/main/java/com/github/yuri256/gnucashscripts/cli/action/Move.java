@@ -37,8 +37,8 @@ public class Move implements Runnable {
             System.exit(1);
         }
 
-        Path ingInDir = new IngJob(Config.load()).getInDir().toPath();
-        Path abnInDir = new AbnJob(Config.load()).getInDir().toPath();
+        Path ingInDir = IngJob.create(Config.load()).getInDir().toPath();
+        Path abnInDir = AbnJob.create(Config.load()).getInDir().toPath();
 
         try {
             Files.list(downloadsDirFile.toPath()).forEach(path -> {

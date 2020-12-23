@@ -100,10 +100,6 @@ public class CompleteJob {
         return getExistingDir(getJobDir(), IN);
     }
 
-    static File getInDirPath(File jobDir) {
-        return getExistingDir(jobDir, IN);
-    }
-
     static File getExistingDir(File jobDir, String subDir) {
         final File inDir = new File(jobDir, subDir);
         if (!inDir.exists() && !inDir.mkdir()) {

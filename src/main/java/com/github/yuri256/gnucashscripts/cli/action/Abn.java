@@ -8,7 +8,6 @@ import picocli.CommandLine;
 public class Abn implements Runnable {
     @Override
     public void run() {
-        System.out.println("Running ABN converter");
-        new AbnJob(Config.load()).run();
+        AbnJob.create(Config.load()).run();
     }
 }

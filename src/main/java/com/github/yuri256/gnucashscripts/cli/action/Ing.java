@@ -8,7 +8,6 @@ import picocli.CommandLine;
 public class Ing implements Runnable {
     @Override
     public void run() {
-        System.out.println("Running ING converter");
-        new IngJob(Config.load()).run();
+        IngJob.create(Config.load()).run();
     }
 }
