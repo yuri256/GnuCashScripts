@@ -14,6 +14,7 @@ Following sections will describe how to run the scripts using both ways
 ## Using pre-built jar file
  1. Make sure you have java (JRE) version 11+ installed. To check, run `java -version` in the command line. You should get output similar to this:
     ```
+    C:\Users\myuser>java -version
     ...
     OpenJDK Runtime Environment (build 14.0.2+12-46)
     ...
@@ -31,7 +32,7 @@ This will produce a converted file, with the name of input file and extension '.
  1. Make sure you have git and **JDK** version 11+ installed.  
     To check, run `` in the command line. You should get output similar to this:
     ```
-    javac -version
+    C:\Users\myuser>javac -version
     javac 14.0.2
     ```
 2. Clone the code and then run:
