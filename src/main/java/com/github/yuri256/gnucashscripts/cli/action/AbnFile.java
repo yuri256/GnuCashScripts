@@ -1,5 +1,6 @@
 package com.github.yuri256.gnucashscripts.cli.action;
 
+import com.github.yuri256.gnucashscripts.job.abn.AbnFileConverter;
 import com.github.yuri256.gnucashscripts.job.abn.model.AbnConstants;
 import com.github.yuri256.gnucashscripts.job.abn.AbnJob;
 import com.github.yuri256.gnucashscripts.job.common.DescriptionFilterFunction;
@@ -28,7 +29,7 @@ public class AbnFile implements Runnable {
             }
         }
         try {
-            new AbnJob(null, null, null, new DescriptionFilterFunction(AbnConstants.DEFAULT_REMOVE_FIELD_KEYS, AbnConstants.DEFAULT_REMOVE_KEY_KEYS)).processFile(inFile.toPath(), outFile.toPath());
+            new AbnFileConverter(new DescriptionFilterFunction(AbnConstants.DEFAULT_REMOVE_FIELD_KEYS, AbnConstants.DEFAULT_REMOVE_KEY_KEYS)).apply(inFile.toPath(), outFile.toPath());
         } catch (IOException e) {
             throw new RuntimeException("Error during run: " + e.getMessage());
         }

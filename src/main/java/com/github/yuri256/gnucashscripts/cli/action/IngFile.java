@@ -1,5 +1,6 @@
 package com.github.yuri256.gnucashscripts.cli.action;
 
+import com.github.yuri256.gnucashscripts.job.ing.IngFileConverter;
 import com.github.yuri256.gnucashscripts.job.ing.IngJob;
 import com.github.yuri256.gnucashscripts.job.ing.model.IngConstants;
 import picocli.CommandLine;
@@ -27,7 +28,7 @@ public class IngFile implements Runnable {
             }
         }
         try {
-            new IngJob(null, null, null, IngConstants.DEFAULT_REMOVE_FIELDS_KEYS).processFile(inFile.toPath(), outFile.toPath());
+            new IngFileConverter(IngConstants.DEFAULT_REMOVE_FIELDS_KEYS).apply(inFile.toPath(), outFile.toPath());
         } catch (IOException e) {
             throw new RuntimeException("Error during run: " + e.getMessage());
         }
