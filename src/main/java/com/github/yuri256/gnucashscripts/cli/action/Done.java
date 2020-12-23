@@ -1,6 +1,6 @@
 package com.github.yuri256.gnucashscripts.cli.action;
 
-import com.github.yuri256.gnucashscripts.job.FileJob;
+import com.github.yuri256.gnucashscripts.job.CompleteJob;
 import com.github.yuri256.gnucashscripts.config.Config;
 import com.github.yuri256.gnucashscripts.config.Property;
 import picocli.CommandLine;
@@ -29,10 +29,10 @@ public class Done implements Runnable {
         }
 
         Path jobDir = Paths.get(baseDir, Config.load().get(Property.GNU_CASH_DIR_NAME));
-        FileJob.checkExists(jobDir.toFile());
+        CompleteJob.checkExists(jobDir.toFile());
 
-        File inDir = FileJob.getInDir(jobDir.toFile());
-        File doneDir = FileJob.getDoneDir(jobDir.toFile());
+        File inDir = CompleteJob.getInDir(jobDir.toFile());
+        File doneDir = CompleteJob.getDoneDir(jobDir.toFile());
         try {
             Files.list(inDir.toPath()).forEach(path -> {
                 System.out.println("Moving file " + path);

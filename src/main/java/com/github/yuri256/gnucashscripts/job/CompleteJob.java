@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public abstract class FileJob {
+public class CompleteJob {
     private static final String IN = "in";
     private static final String OUT = "out";
     private static final String DONE = "done";
@@ -14,18 +14,16 @@ public abstract class FileJob {
     private final String baseDir;
     private final String jobDirName;
     private final String nextJobDirName;
+    private final FileConverter fileConverter;
 
-    public FileJob(String baseDir, String jobDirName, String nextJobDirName) {
+    public CompleteJob(String baseDir, String jobDirName, String nextJobDirName, FileConverter fileConverter) {
         this.baseDir = baseDir;
         this.jobDirName = jobDirName;
         this.nextJobDirName = nextJobDirName;
+        this.fileConverter = fileConverter;
     }
 
-    protected abstract void processFile(Path inPath, Path outDir) throws IOException;
-
     public void run() {
-
-
         final File jobDir = getJobDir();
 
         final File inDir = getInDir(jobDir);
@@ -43,7 +41,8 @@ public abstract class FileJob {
                         System.out.println("File already processed, will skip. " + outPath.getFileName());
                         return;
                     }
-                    processFile(inPath, outPath);
+
+                    fileConverter.apply(inPath, outPath);
 
                     Files.move(inPath, donePath);
 
