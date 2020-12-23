@@ -2,8 +2,8 @@ package com.github.yuri256.gnucashscripts.cli.action;
 
 import com.github.yuri256.gnucashscripts.config.Config;
 import com.github.yuri256.gnucashscripts.config.Property;
-import com.github.yuri256.gnucashscripts.job.abn.AbnJob;
-import com.github.yuri256.gnucashscripts.job.ing.IngJob;
+import com.github.yuri256.gnucashscripts.impl.abn.job.AbnJob;
+import com.github.yuri256.gnucashscripts.impl.ing.job.IngJob;
 import picocli.CommandLine;
 
 import java.io.File;

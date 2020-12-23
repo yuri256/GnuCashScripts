@@ -1,11 +1,11 @@
 package com.github.yuri256.gnucashscripts.cli.action;
 
+import com.github.yuri256.gnucashscripts.fileconvertor.DescriptionFilterFunction;
+import com.github.yuri256.gnucashscripts.impl.ing.fileconvertor.IngDescriptionConverter;
+import com.github.yuri256.gnucashscripts.impl.ing.fileconvertor.IngFileConverter;
+import com.github.yuri256.gnucashscripts.impl.ing.fileconvertor.IngMyMt940Converter;
+import com.github.yuri256.gnucashscripts.impl.ing.model.IngConstants;
 import com.github.yuri256.gnucashscripts.job.SimpleFileJob;
-import com.github.yuri256.gnucashscripts.job.common.DescriptionFilterFunction;
-import com.github.yuri256.gnucashscripts.job.ing.IngDescriptionConverter;
-import com.github.yuri256.gnucashscripts.job.ing.IngFileConverter;
-import com.github.yuri256.gnucashscripts.job.ing.IngMyMt940Converter;
-import com.github.yuri256.gnucashscripts.job.ing.model.IngConstants;
 import picocli.CommandLine;
 
 import java.util.Set;

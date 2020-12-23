@@ -1,6 +1,6 @@
 package com.github.yuri256.gnucashscripts.config;
 
-import com.github.yuri256.gnucashscripts.job.ing.model.IngConstants;
+import com.github.yuri256.gnucashscripts.impl.ing.model.IngConstants;
 
 public enum Property {
     BASE_DIR("baseDir", null),

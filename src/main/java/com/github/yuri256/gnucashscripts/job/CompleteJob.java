@@ -1,5 +1,7 @@
 package com.github.yuri256.gnucashscripts.job;
 
+import com.github.yuri256.gnucashscripts.fileconvertor.FileConverter;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

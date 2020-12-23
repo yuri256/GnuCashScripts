@@ -1,10 +1,10 @@
 package com.github.yuri256.gnucashscripts.cli.action;
 
-import com.github.yuri256.gnucashscripts.job.FileConverter;
+import com.github.yuri256.gnucashscripts.fileconvertor.DescriptionFilterFunction;
+import com.github.yuri256.gnucashscripts.fileconvertor.FileConverter;
+import com.github.yuri256.gnucashscripts.impl.abn.fileconvertor.AbnFileConverter;
+import com.github.yuri256.gnucashscripts.impl.abn.model.AbnConstants;
 import com.github.yuri256.gnucashscripts.job.SimpleFileJob;
-import com.github.yuri256.gnucashscripts.job.abn.AbnFileConverter;
-import com.github.yuri256.gnucashscripts.job.abn.model.AbnConstants;
-import com.github.yuri256.gnucashscripts.job.common.DescriptionFilterFunction;
 import picocli.CommandLine;
 
 import java.util.Set;

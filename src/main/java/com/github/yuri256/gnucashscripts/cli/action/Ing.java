@@ -1,7 +1,7 @@
 package com.github.yuri256.gnucashscripts.cli.action;
 
 import com.github.yuri256.gnucashscripts.config.Config;
-import com.github.yuri256.gnucashscripts.job.ing.IngJob;
+import com.github.yuri256.gnucashscripts.impl.ing.job.IngJob;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "ing", description = "Convert ING csv file to MT940 file")
