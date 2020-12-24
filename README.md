@@ -3,6 +3,7 @@ Scripts to make GnuCash import easier:
  - Convert Netherlands' ING CSV export file (new format with ";") to MT940 format consumable by GnuCash
  - Convert Netherlands' AbnAmro MT940 export file to MT940 format consumable by GnuCash
  - Additional convenience commands to move files around. This requires configuration file to be set up
+ - Some filtering / data cleanup during conversion
 
 ## Running the scripts
 There are two basic ways to run the scripts:
