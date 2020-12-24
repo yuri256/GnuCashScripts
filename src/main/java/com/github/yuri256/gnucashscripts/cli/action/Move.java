@@ -2,8 +2,8 @@ package com.github.yuri256.gnucashscripts.cli.action;
 
 import com.github.yuri256.gnucashscripts.config.Config;
 import com.github.yuri256.gnucashscripts.config.Property;
-import com.github.yuri256.gnucashscripts.impl.abn.job.AbnJob;
-import com.github.yuri256.gnucashscripts.impl.ing.job.IngJob;
+import com.github.yuri256.gnucashscripts.impl.abn.job.AbnJobFactory;
+import com.github.yuri256.gnucashscripts.impl.ing.job.IngJobFactory;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -37,8 +37,8 @@ public class Move implements Runnable {
             System.exit(1);
         }
 
-        Path ingInDir = IngJob.create(Config.load()).getInDir().toPath();
-        Path abnInDir = AbnJob.create(Config.load()).getInDir().toPath();
+        Path ingInDir = IngJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
+        Path abnInDir = AbnJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
 
         try {
             Files.list(downloadsDirFile.toPath()).forEach(path -> {
