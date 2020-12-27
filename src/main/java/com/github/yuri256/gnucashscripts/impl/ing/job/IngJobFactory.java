@@ -21,16 +21,16 @@ public class IngJobFactory {
         String baseDir = config.get(Property.BASE_DIR);
         String jobDirName = config.get(Property.ING_JOB_DIR_NAME);
         String nextJobDirName = config.get(Property.GNU_CASH_DIR_NAME);
-        Set<String> removeFieldKeys = Arrays.stream(config.get(Property.ING_DESCRIPTION_REMOVE_FIELD_KEYS).trim().split(",")).collect(Collectors.toSet());
-        Set<String> removeKeyKeys = Arrays.stream(config.get(Property.ING_DESCRIPTION_REMOVE_KEY_KEYS).trim().split(",")).collect(Collectors.toSet());
+        Set<String> removeFieldKeys = Arrays.stream(config.get(Property.ING_SKIP_FIELD_KEYS).trim().split(",")).collect(Collectors.toSet());
+        Set<String> removeKeyKeys = Arrays.stream(config.get(Property.ING_SKIP_KEY_KEYS).trim().split(",")).collect(Collectors.toSet());
         DescriptionFilterFunction descriptionFilterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
         IngFileConverter fileConverter = new IngFileConverter(new IngMyMt940Converter(new IngDescriptionConverter(descriptionFilterFunction)));
         return new CompleteJob(baseDir, jobDirName, nextJobDirName, fileConverter);
     }
 
     public static SimpleFileJob createSimpleFileJob() {
-        Set<String> removeFieldKeys = IngConstants.DEFAULT_REMOVE_FIELD_KEYS;
-        Set<String> removeKeyKeys = IngConstants.DEFAULT_REMOVE_KEY_KEYS;
+        Set<String> removeFieldKeys = IngConstants.DEFAULT_SKIP_FIELD_KEYS;
+        Set<String> removeKeyKeys = IngConstants.DEFAULT_SKIP_KEY_KEYS;
         DescriptionFilterFunction descriptionFilterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
         IngDescriptionConverter descriptionConverter = new IngDescriptionConverter(descriptionFilterFunction);
         IngMyMt940Converter myMt940Converter = new IngMyMt940Converter(descriptionConverter);

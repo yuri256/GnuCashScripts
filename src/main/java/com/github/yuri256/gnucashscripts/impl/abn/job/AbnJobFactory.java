@@ -27,8 +27,8 @@ public class AbnJobFactory {
     }
 
     public static SimpleFileJob createSimpleFileJob() {
-        Set<String> removeFieldKeys = AbnConstants.DEFAULT_REMOVE_FIELD_KEYS;
-        Set<String> removeKeyKeys = AbnConstants.DEFAULT_REMOVE_KEY_KEYS;
+        Set<String> removeFieldKeys = AbnConstants.DEFAULT_SKIP_FIELD_KEYS;
+        Set<String> removeKeyKeys = AbnConstants.DEFAULT_SKIP_KEY_KEYS;
         DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
         FileConverter fileConverter = new AbnFileConverter(filterFunction);
         return new SimpleFileJob(fileConverter);
