@@ -27,14 +27,14 @@ downloadsDir=/change/me/Downloads
 #
 # Known values: Kenmerk,Incassant ID,Machtiging ID,IBAN,MutatieSoort,TegenRekening
 # Default values: Kenmerk,Incassant ID,Machtiging ID
-#ingDescriptionSkipFields=Kenmerk,Incassant ID,Machtiging ID
+#ingSkipFields=Kenmerk,Incassant ID,Machtiging ID
 
 #
 # Optional. Keys to skip (values remain) from description when generating MT940 for ING import.
 #
 # Known values: Naam,NaamOmschrijving,Omschrijving,Kenmerk,Incassant ID,Machtiging ID,IBAN,MutatieSoort,TegenRekening
 # Default values: Naam,NaamOmschrijving,Omschrijving
-#ingDescriptionSkipKeys=Naam,NaamOmschrijving,Omschrijving
+#ingSkipKeys=Naam,NaamOmschrijving,Omschrijving
 
 #
 # Optional. Fields (key-value pairs) to skip from description when generating MT940 for ABN AMRO import

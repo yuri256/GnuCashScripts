@@ -8,8 +8,8 @@ public enum Property {
     DOWNLOADS_DIR("downloadsDir", null),
     GNU_CASH_DIR_NAME("gnuCashDirName", "gnuCash"),
     ING_JOB_DIR_NAME("ingDirName", "ing"),
-    ING_DESCRIPTION_REMOVE_FIELD_KEYS("ingDescriptionSkipFields", String.join(",", IngConstants.DEFAULT_REMOVE_FIELD_KEYS)),
-    ING_DESCRIPTION_REMOVE_KEY_KEYS("ingDescriptionSkipKeys", String.join(",", IngConstants.DEFAULT_REMOVE_KEY_KEYS)),
+    ING_DESCRIPTION_REMOVE_FIELD_KEYS("ingSkipFields", String.join(",", IngConstants.DEFAULT_REMOVE_FIELD_KEYS)),
+    ING_DESCRIPTION_REMOVE_KEY_KEYS("ingSkipKeys", String.join(",", IngConstants.DEFAULT_REMOVE_KEY_KEYS)),
     ABN_JOB_DIR_NAME("abnDirName", "abn"),
     ABN_SKIP_FIELD_KEYS("abnSkipFields", String.join(",", AbnConstants.DEFAULT_REMOVE_FIELD_KEYS)),
     ABN_SKIP_KEY_KEYS("abnSkipKeys", String.join(",", AbnConstants.DEFAULT_REMOVE_KEY_KEYS));
