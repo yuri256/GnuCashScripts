@@ -32,18 +32,15 @@ public class IngDescriptionConverter implements Function<IngRecord, String> {
             sb.append(IngConstants.NAAM_OMSCHRIJVING + ": ").append(ingRecord.getNaamOmschrijving()).append(" ");
         }
 
-        sb.append(getDescriptionFromMedelingen(ingRecord));
+        if (IngConstants.MUTATIESOORT_BETAALAUTOMAAT.equals(ingRecord.getMutatieSoort()) || IngConstants.MUTATIESOORT_GELDAUTOMAAT.equals(ingRecord.getMutatieSoort())) {
+            sb.append(getDescriptionTerminalPayment(ingRecord.getMededelingen()));
+        } else {
+            sb.append(getDescriptionGeneral(ingRecord.getMededelingen()));
+        }
 
         sb.append(" TegenRekening: ").append(ingRecord.getTegenRekening());
         sb.append(" MutatieSoort: ").append(ingRecord.getMutatieSoort());
         return sb.toString();
-    }
-
-    private static String getDescriptionFromMedelingen(IngRecord ingRecord) {
-        if (IngConstants.MUTATIESOORT_BETAALAUTOMAAT.equals(ingRecord.getMutatieSoort()) || IngConstants.MUTATIESOORT_GELDAUTOMAAT.equals(ingRecord.getMutatieSoort())) {
-            return getDescriptionTerminalPayment(ingRecord.getMededelingen());
-        }
-        return getDescriptionGeneral(ingRecord.getMededelingen());
     }
 
     private static String getDescriptionGeneral(String description) {
