@@ -3,11 +3,15 @@
 #
 # Mandatory. Base directory for all the import job directories. Recommended value: subdirectory import in your GNU Cash file directory.
 #
-baseDir=/var/gnuCash/import
+#baseDir=C:/Users/<user>/gnuCash/import
+#baseDir=/var/gnuCash/import
+baseDir=/change/me/import
 
 #
-# Mandatory for matching downloaded files and moving them to the appropriate job dir. Typical downloads directory where the incoming files will be downloaded.
+# Mandatory for 'move' command (matching downloaded files and moving them to the appropriate job dir). Typical downloads directory where the incoming files will be downloaded.
 #
+#downloadsDir=C:/Users/<user>/Downloads
+#downloadsDir=/home/<user>/Downloads
 downloadsDir=/home/<user>/Downloads
 
 #
