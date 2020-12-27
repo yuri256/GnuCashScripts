@@ -35,21 +35,18 @@ public class IngDescriptionConverter implements Function<IngRecord, String> {
         sb.append(getDescriptionFromMedelingen(ingRecord));
 
         // keep the TegenRekening for bank transfers
-        if (IngConstants.OVERSCHRIVING.equals(ingRecord.getMutatieSoort())
+        if (IngConstants.MUTATIESOORT_OVERSCHRIVING.equals(ingRecord.getMutatieSoort())
                 && ingRecord.getTegenRekening() != null
                 && ingRecord.getTegenRekening().trim().length() > 0) {
             sb.append(" TegenRekening: ").append(ingRecord.getTegenRekening());
         }
 
-        // for terminal payment there is no need for MutatieSoort
-        if (!IngConstants.BETAALAUTOMAAT.equals(ingRecord.getMutatieSoort())) {
-            sb.append(" MutatieSoort: ").append(ingRecord.getMutatieSoort());
-        }
+        sb.append(" MutatieSoort: ").append(ingRecord.getMutatieSoort());
         return sb.toString();
     }
 
     private static String getDescriptionFromMedelingen(IngRecord ingRecord) {
-        if (IngConstants.BETAALAUTOMAAT.equals(ingRecord.getMutatieSoort()) || IngConstants.GELDAUTOMAAT.equals(ingRecord.getMutatieSoort())) {
+        if (IngConstants.MUTATIESOORT_BETAALAUTOMAAT.equals(ingRecord.getMutatieSoort()) || IngConstants.MUTATIESOORT_GELDAUTOMAAT.equals(ingRecord.getMutatieSoort())) {
             return getDescriptionTerminalPayment(ingRecord.getMededelingen());
         }
         return getDescriptionGeneral(ingRecord.getMededelingen());

@@ -13,7 +13,7 @@ class IngDescriptionConverterTest {
     @Test
     public void testTerminalPayment() {
         String record = createConverter().apply(new IngRecord("20010304", "Test Name-Desc", "TestRekening", "TestTegenRekening", "BA", AfBij.Af, "12,34", "Betaalautomaat", "Pasvolgnr: 001 07-03-2020 09:34 Transactie: A111B2 Term: AB1234 Valutadatum: 07-03-2020"));
-        Assertions.assertEquals("Test Name-Desc Datum/Tijd: 07-03-2020 09:34", record);
+        Assertions.assertEquals("Test Name-Desc Datum/Tijd: 07-03-2020 09:34 MutatieSoort: Betaalautomaat", record);
     }
 
     @Test

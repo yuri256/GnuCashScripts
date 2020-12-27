@@ -7,13 +7,12 @@ import com.github.yuri256.gnucashscripts.impl.ing.model.IngRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.Set;
 
 class IngMyMt940ConverterTest {
     @Test
     public void testFields() {
-        final HashSet<String> removeFieldKeys = new HashSet<>();
+        Set<String> removeFieldKeys = Set.of("MutatieSoort");
         Set<String> removeKeyKeys = Set.of(IngConstants.NAAM_OMSCHRIJVING, IngConstants.NAAM, IngConstants.OMSCHRIJVING);
         DescriptionFilterFunction descriptionFilterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
         IngDescriptionConverter descriptionConverter = new IngDescriptionConverter(descriptionFilterFunction);
