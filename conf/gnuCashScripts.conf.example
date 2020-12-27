@@ -17,9 +17,10 @@ downloadsDir=/change/me/Downloads
 #
 # Optional. Subdirectories under baseDir. Used for ABN AMRO, ING and GnuCash import.
 #
-gnuCashDirName=gnuCash
-ingDirName=ing
-abnDirName=abn
+# Default values (for corresponding variables): gnuCash, ing, abn
+#gnuCashDirName=gnuCash
+#ingDirName=ing
+#abnDirName=abn
 
 #
 # Optional. Fields (key-value pairs) to skip from description when generating MT940 for ING import
