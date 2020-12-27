@@ -12,7 +12,7 @@ import java.util.Set;
 class IngMyMt940ConverterTest {
     @Test
     public void testFields() {
-        Set<String> removeFieldKeys = Set.of("MutatieSoort");
+        Set<String> removeFieldKeys = Set.of("MutatieSoort", "TegenRekening");
         Set<String> removeKeyKeys = Set.of(IngConstants.NAAM_OMSCHRIJVING, IngConstants.NAAM, IngConstants.OMSCHRIJVING);
         DescriptionFilterFunction descriptionFilterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
         IngDescriptionConverter descriptionConverter = new IngDescriptionConverter(descriptionFilterFunction);

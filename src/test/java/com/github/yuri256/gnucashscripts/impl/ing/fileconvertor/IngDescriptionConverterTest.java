@@ -55,7 +55,7 @@ class IngDescriptionConverterTest {
     @Test
     public void testBankTransferToAccount() {
         String record = createConverter().apply(new IngRecord("20010304", "J DOE", "TestRekening", "TestTegenRekening", "OV", AfBij.Bij, "12,34", "Overschrijving", "Naam: J DOE IBAN: NL03TestIban Datum/Tijd: 01-01-2020 12:34:56 Valutadatum: 01-01-2020"));
-        Assertions.assertEquals("J DOE IBAN: NL03TestIban Datum/Tijd: 01-01-2020 12:34 TegenRekening: TestTegenRekening MutatieSoort: Overschrijving", record);
+        Assertions.assertEquals("J DOE IBAN: NL03TestIban Datum/Tijd: 01-01-2020 12:34 MutatieSoort: Overschrijving", record);
     }
 
     @Test
@@ -65,7 +65,7 @@ class IngDescriptionConverterTest {
     }
 
     private IngDescriptionConverter createConverter() {
-        Set<String> removeFieldKeys = Set.of("Kenmerk", "Incassant ID", "Machtiging ID");
+        Set<String> removeFieldKeys = Set.of("Kenmerk", "Incassant ID", "Machtiging ID", "TegenRekening");
         Set<String> removeKeyKeys = Set.of(IngConstants.NAAM_OMSCHRIJVING, IngConstants.NAAM, IngConstants.OMSCHRIJVING);
         DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
         return new IngDescriptionConverter(filterFunction);
