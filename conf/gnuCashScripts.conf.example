@@ -3,26 +3,34 @@
 #
 # Mandatory. Base directory for all the import job directories. Recommended value: subdirectory import in your GNU Cash file directory.
 #
-#baseDir=C:/Users/<user>/gnuCash/import
-#baseDir=/var/gnuCash/import
+# Example Windows: baseDir=C:/Users/<user>/gnuCash/import
+# Example Linux: baseDir=/var/gnuCash/import
 baseDir=/change/me/import
 
 #
-# Mandatory for 'move' command (matching downloaded files and moving them to the appropriate job dir). Typical downloads directory where the incoming files will be downloaded.
-#
-#downloadsDir=C:/Users/<user>/Downloads
-#downloadsDir=/home/<user>/Downloads
-downloadsDir=/home/<user>/Downloads
-
-#
-# Optional. Subdirectory names
+# Optional. Subdirectory names under baseDir
 #
 gnuCashDirName=gnuCash
 ingDirName=ing
 abnDirName=abn
 
 #
-# Optional. Fields to skip from description when generating MT940 for ING import
-# Known values: Kenmerk,Incassant ID,Machtiging ID,IBAN,MutatieSoort,TegenRekening
+# Mandatory for 'move' command. Typical downloads directory where the incoming files will be downloaded.
 #
+# Example Windows: downloadsDir=C:/Users/<user>/Downloads
+# Example Linux: downloadsDir=/home/<user>/Downloads
+downloadsDir=/change/me/Downloads
+
+#
+# Optional. Fields (key-value pairs) to skip from description when generating MT940 for ING import
+#
+# Known values: Kenmerk,Incassant ID,Machtiging ID,IBAN,MutatieSoort,TegenRekening
+# Default values: Kenmerk,Incassant ID,Machtiging ID
 #ingDescriptionSkipFields=Kenmerk,Incassant ID,Machtiging ID
+
+#
+# Optional. Keys to skip (values remain) from description when generating MT940 for ING import.
+#
+# Known values: Naam,NaamOmschrijving,Omschrijving,Kenmerk,Incassant ID,Machtiging ID,IBAN,MutatieSoort,TegenRekening
+# Default values: Naam,NaamOmschrijving,Omschrijving
+#ingDescriptionSkipKeys=Naam,NaamOmschrijving,Omschrijving
