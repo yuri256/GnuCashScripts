@@ -8,18 +8,18 @@
 baseDir=/change/me/import
 
 #
-# Optional. Subdirectory names under baseDir
-#
-gnuCashDirName=gnuCash
-ingDirName=ing
-abnDirName=abn
-
-#
 # Mandatory for 'move' command. Typical downloads directory where the incoming files will be downloaded.
 #
 # Example Windows: downloadsDir=C:/Users/<user>/Downloads
 # Example Linux: downloadsDir=/home/<user>/Downloads
 downloadsDir=/change/me/Downloads
+
+#
+# Optional. Subdirectories under baseDir. Used for ABN AMRO, ING and GnuCash import.
+#
+gnuCashDirName=gnuCash
+ingDirName=ing
+abnDirName=abn
 
 #
 # Optional. Fields (key-value pairs) to skip from description when generating MT940 for ING import
