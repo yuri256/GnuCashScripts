@@ -42,7 +42,7 @@ task deployJar(type: Copy) {
 }
 
 task deployScript(type: Copy) {
-    from file("$projectDir/deployment/gnuCashScripts.sh")
+    from file("$projectDir/deployment")
     into file("${System.properties.'os.name'.toLowerCase().contains("win") ? System.env.USERPROFILE : System.env.HOME}/bin")
     fileMode 0755
 }
