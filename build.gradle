@@ -38,16 +38,16 @@ task deploy {
 task deployJar(type: Copy) {
     dependsOn jar
     from file("$buildDir/libs/${project.name}.jar")
-    into file("$System.env.HOME/bin/")
+    into file("${System.properties.'os.name'.toLowerCase().contains("win") ? System.env.USERPROFILE : System.env.HOME}/bin/")
 }
 
 task deployScript(type: Copy) {
     from file("$projectDir/deployment/gnuCashScripts.sh")
-    into file("$System.env.HOME/bin")
+    into file("${System.properties.'os.name'.toLowerCase().contains("win") ? System.env.USERPROFILE : System.env.HOME}/bin")
     fileMode 0755
 }
 
 task deployConfigExample(type: Copy) {
     from file("$projectDir/conf/gnuCashScripts.conf.example")
-    into file("$System.env.HOME/.config/gnuCashScripts")
+    into file("${System.properties.'os.name'.toLowerCase().contains("win") ? System.env.USERPROFILE : System.env.HOME}/.config/gnuCashScripts")
 }
