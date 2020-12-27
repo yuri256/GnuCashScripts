@@ -74,21 +74,21 @@ class DescriptionFilterFunctionTest {
 
     @Test
     public void testNaamOmschrijvingRemainsKeyRemoved() {
-        Assertions.assertEquals("Name desc 1", createFilterFunction().apply("NaamOmschrijving: Name desc 1"));
+        Assertions.assertEquals("Name desc 1", createFilterFunction().apply("Naam/Omschrijving: Name desc 1"));
     }
 
     @Test
     public void testNaamOmschrijvingRemainsKeyRemovedLastPosition() {
-        Assertions.assertEquals("Key1: value one Name desc 1", createFilterFunction().apply("Key1: value one NaamOmschrijving: Name desc 1"));
+        Assertions.assertEquals("Key1: value one Name desc 1", createFilterFunction().apply("Key1: value one Naam/Omschrijving: Name desc 1"));
     }
 
     @Test
     public void testNaamOmschrijvingRemainsKeyRemovedMiddlePosition() {
-        Assertions.assertEquals("Key1: value one Name desc 1 Key2: value two", createFilterFunction().apply("Key1: value one NaamOmschrijving: Name desc 1 Key2: value two"));
+        Assertions.assertEquals("Key1: value one Name desc 1 Key2: value two", createFilterFunction().apply("Key1: value one Naam/Omschrijving: Name desc 1 Key2: value two"));
     }
 
     private DescriptionFilterFunction createFilterFunction() {
-        return new DescriptionFilterFunction(Set.of("Kenmerk", "Incassant ID"), Set.of("Naam","Omschrijving", "NaamOmschrijving"));
+        return new DescriptionFilterFunction(Set.of("Kenmerk", "Incassant ID"), Set.of("Naam","Omschrijving", "Naam/Omschrijving"));
     }
 
 }

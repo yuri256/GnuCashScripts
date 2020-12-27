@@ -27,7 +27,7 @@ public class IngDescriptionConverter implements Function<IngRecord, String> {
     private String createDescription(IngRecord ingRecord) {
         StringBuilder sb = new StringBuilder();
 
-        // Add NaamOmschrijving only if there is no Naam in Medelingen, otherwise it will be duplicated
+        // Add NAAM_OMSCHRIJVING only if there is no NAAM in Medelingen, otherwise it will be duplicated
         if (!ingRecord.getMededelingen().contains(IngConstants.NAAM + ":")) {
             sb.append(IngConstants.NAAM_OMSCHRIJVING + ": ").append(ingRecord.getNaamOmschrijving()).append(" ");
         }

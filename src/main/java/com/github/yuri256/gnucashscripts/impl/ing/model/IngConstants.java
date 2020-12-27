@@ -8,7 +8,7 @@ public final class IngConstants {
     public static final String MUTATIESOORT_BETAALAUTOMAAT = "Betaalautomaat";
     public static final String MUTATIESOORT_GELDAUTOMAAT = "Geldautomaat";
     public static final String VALUTADATUM = "Valutadatum:";
-    public static final String NAAM_OMSCHRIJVING = "NaamOmschrijving";
+    public static final String NAAM_OMSCHRIJVING = "Naam/Omschrijving";
     public static final String OMSCHRIJVING = "Omschrijving";
     public static final String NAAM = "Naam";
     public static final String DATUM_TIJD = "Datum/Tijd";
