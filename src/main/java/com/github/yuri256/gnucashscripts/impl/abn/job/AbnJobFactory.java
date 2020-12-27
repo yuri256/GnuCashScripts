@@ -9,7 +9,9 @@ import com.github.yuri256.gnucashscripts.impl.abn.model.AbnConstants;
 import com.github.yuri256.gnucashscripts.job.CompleteJob;
 import com.github.yuri256.gnucashscripts.job.SimpleFileJob;
 
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AbnJobFactory {
 
@@ -17,8 +19,8 @@ public class AbnJobFactory {
         String baseDir = config.get(Property.BASE_DIR);
         String jobDirName = config.get(Property.ABN_JOB_DIR_NAME);
         String nextJobDirName = config.get(Property.GNU_CASH_DIR_NAME);
-        Set<String> removeFieldKeys = AbnConstants.DEFAULT_REMOVE_FIELD_KEYS;
-        Set<String> removeKeyKeys = AbnConstants.DEFAULT_REMOVE_KEY_KEYS;
+        Set<String> removeFieldKeys = Arrays.stream(config.get(Property.ABN_SKIP_FIELD_KEYS).trim().split(",")).collect(Collectors.toSet());
+        Set<String> removeKeyKeys = Arrays.stream(config.get(Property.ABN_SKIP_KEY_KEYS).trim().split(",")).collect(Collectors.toSet());
         DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(removeFieldKeys, removeKeyKeys);
         AbnFileConverter fileConverter = new AbnFileConverter(filterFunction);
         return new CompleteJob(baseDir, jobDirName, nextJobDirName, fileConverter);

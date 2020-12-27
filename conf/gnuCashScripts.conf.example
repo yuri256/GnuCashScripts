@@ -35,3 +35,17 @@ downloadsDir=/change/me/Downloads
 # Known values: Naam,NaamOmschrijving,Omschrijving,Kenmerk,Incassant ID,Machtiging ID,IBAN,MutatieSoort,TegenRekening
 # Default values: Naam,NaamOmschrijving,Omschrijving
 #ingDescriptionSkipKeys=Naam,NaamOmschrijving,Omschrijving
+
+#
+# Optional. Fields (key-value pairs) to skip from description when generating MT940 for ABN AMRO import
+#
+# Default values: BIC,MARF,EREF,CSID,IBAN
+# Known values: TRTP,CSID,NAME,MARF,REMI,EREF,IBAN,BIC
+#abnSkipFields=BIC,MARF,EREF,CSID,IBAN
+
+#
+# Optional. Keys to skip (values remain) from description when generating MT940 for ABN AMRO import.
+#
+# Default values: REMI,NAME,TRTP
+# Known values: TRTP,CSID,NAME,MARF,REMI,EREF,IBAN,BIC
+#abnSkipKeys=REMI,NAME,TRTP
