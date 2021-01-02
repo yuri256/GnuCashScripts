@@ -72,7 +72,7 @@ public class AbnFileConverter implements FileConverter {
 
                 if (statementBlockEnded) {
                     writer.write(STATEMENT_BLOCK_PREFX);
-                    String statement = modify(String.join("", statementLines));
+                    String statement = modify(String.join(" ", statementLines));
                     String filteredStatement = filterFunction.apply(statement);
                     writer.write(filteredStatement);
                     newLine(writer);
@@ -103,6 +103,7 @@ public class AbnFileConverter implements FileConverter {
                 .replace("/EREF/", " EREF: ")
                 .replace("/IBAN/", " IBAN: ")
                 .replace("/BIC/", " BIC: ")
+                .replaceAll("\\s+", " ")
                 .trim()
                 ;
     }
