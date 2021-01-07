@@ -2,7 +2,8 @@ package com.github.yuri256.gnucashscripts.impl.abn.fileconvertor;
 
 import com.github.yuri256.gnucashscripts.fileconvertor.DescriptionFilterFunction;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,43 +14,20 @@ import java.util.Set;
 
 class AbnFileConverterTest {
 
-    @Test
-    void processExampleFile() throws URISyntaxException, IOException {
+    @ParameterizedTest
+    @CsvSource({"abnExample.mta,abnExampleExpected.mta"
+            , "abnMultilineExample.mta,abnMultilineExampleExpected.mta"
+            , "abnSpaces.mta,abnSpacesExpected.mta"
+    })
+    void processExampleFile(String inputFileName, String expectedFileName) throws URISyntaxException, IOException {
         // GIVEN
-        Path inPath = Paths.get(getClass().getResource("abnExample.mta").toURI());
+        Path inPath = Paths.get(getClass().getResource(inputFileName).toURI());
         Path outPath = Files.createTempFile("gnucash-abn-test-", ".mta");
-        Path expectedPath = Paths.get(getClass().getResource("abnExampleExpected.mta").toURI());
+        Path expectedPath = Paths.get(getClass().getResource(expectedFileName).toURI());
 
         // WHEN
-        new AbnFileConverter(new DescriptionFilterFunction(Set.of("BIC"), Set.of())).apply(inPath, outPath);
-
-        // THEN
-        Assertions.assertEquals(Files.readString(expectedPath), Files.readString(outPath));
-    }
-
-    @Test
-    void processMultilineFile() throws URISyntaxException, IOException {
-        // GIVEN
-        Path inPath = Paths.get(getClass().getResource("abnMultilineExample.mta").toURI());
-        Path outPath = Files.createTempFile("gnucash-abn-test-", ".mta");
-        Path expectedPath = Paths.get(getClass().getResource("abnMultilineExampleExpected.mta").toURI());
-
-        // WHEN
-        new AbnFileConverter(new DescriptionFilterFunction(Set.of("BIC"), Set.of())).apply(inPath, outPath);
-
-        // THEN
-        Assertions.assertEquals(Files.readString(expectedPath), Files.readString(outPath));
-    }
-
-    @Test
-    void processSpacesInStatement() throws URISyntaxException, IOException {
-        // GIVEN
-        Path inPath = Paths.get(getClass().getResource("abnSpaces.mta").toURI());
-        Path outPath = Files.createTempFile("gnucash-abn-test-", ".mta");
-        Path expectedPath = Paths.get(getClass().getResource("abnSpacesExpected.mta").toURI());
-
-        // WHEN
-        new AbnFileConverter(new DescriptionFilterFunction(Set.of("BIC"), Set.of())).apply(inPath, outPath);
+        DescriptionFilterFunction filterFunction = new DescriptionFilterFunction(Set.of("BIC"), Set.of());
+        new AbnFileConverter(filterFunction).apply(inPath, outPath);
 
         // THEN
         Assertions.assertEquals(Files.readString(expectedPath), Files.readString(outPath));
