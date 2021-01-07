@@ -18,6 +18,7 @@ class AbnFileConverterTest {
     @CsvSource({"abnExample.mta,abnExampleExpected.mta"
             , "abnMultilineExample.mta,abnMultilineExampleExpected.mta"
             , "abnSpaces.mta,abnSpacesExpected.mta"
+            , "abnTerminalPayment.mta,abnTerminalPaymentExpected.mta"
     })
     void processExampleFile(String inputFileName, String expectedFileName) throws URISyntaxException, IOException {
         // GIVEN
