@@ -49,7 +49,7 @@ public class IngDescriptionConverter implements Function<IngRecord, String> {
         StringTokenizer tokenizer = new StringTokenizer(description, " ");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            if (IngConstants.VALUTADATUM.equals(token)) {
+            if ((IngConstants.VALUTADATUM + ":").equals(token)) {
                 // skip, not interesting. We already have a date
                 tokenizer.nextToken();
                 continue;
@@ -89,7 +89,7 @@ public class IngDescriptionConverter implements Function<IngRecord, String> {
                 // skip those, no extra information
                 case "Transactie:":
                 case "Term:":
-                case IngConstants.VALUTADATUM:
+                case IngConstants.VALUTADATUM + ":":
                     tokenizer.nextToken();
                     break;
                 default:
