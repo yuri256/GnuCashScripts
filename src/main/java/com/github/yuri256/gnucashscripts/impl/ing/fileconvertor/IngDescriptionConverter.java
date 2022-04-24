@@ -72,9 +72,10 @@ public class IngDescriptionConverter implements Function<IngRecord, String> {
             String token = tokenizer.nextToken();
             switch (token) {
                 case "Pasvolgnr:":
-                    String threeCharacterNumber = tokenizer.nextToken();
-                    if (threeCharacterNumber.length() != 3) {
-                        throw new RuntimeException("Invalid Pasvolgnr format, not 3 char first token: " + description);
+                    String actualPasvolgNr = tokenizer.nextToken();
+                    // Got a passvolg nr '00 ' in some cases
+                    if (actualPasvolgNr.length() != 3 && actualPasvolgNr.length() != 2) {
+                        throw new RuntimeException("Invalid Pasvolgnr format, not 2 or 3 char sequence: " + description);
                     }
                     String date = tokenizer.nextToken();
                     if (date.length() != 10) {

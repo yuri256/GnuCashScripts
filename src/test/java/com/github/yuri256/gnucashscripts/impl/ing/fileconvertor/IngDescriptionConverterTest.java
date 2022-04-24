@@ -29,6 +29,13 @@ class IngDescriptionConverterTest {
     }
 
     @Test
+    public void testShortPassvolgNr() {
+        String record = createConverter().apply(new IngRecord("20010304", "Hr J DOE", "NL03TestRekening", "", "GT", AfBij.Bij, "12,34", "Betaalautomaat", "Pasvolgnr: 00  27-02-2022 11:07 Transactie: 05MABC Term: C108 Valuta: 492,38 SEK Koers: 0,0960555 Opslag: 0,66 EUR Valutadatum: 18-08-2021"));
+        Assertions.assertEquals("Hr J DOE Datum/Tijd: 27-02-2022 11:07 Valuta: 492,38 SEK Koers: 0,0960555 Opslag: 0,66 EUR MutatieSoort: Betaalautomaat", record);
+    }
+
+
+    @Test
     public void testIncasso() {
         String record = createConverter().apply(new IngRecord("20010304", "The Company Name", "TestRekening", "TheCompanyRekening", "IC", AfBij.Af, "12,34", "Incasso", "Naam: TheCompany Omschrijving: Fact 0001 desc IBAN: NL18TestIban2 Kenmerk: 12345678 Machtiging ID: 1234567 Incassant ID: 123456 Doorlopende incasso Valutadatum: 06-03-2020"));
         Assertions.assertEquals("TheCompany Fact 0001 desc IBAN: NL18TestIban2 MutatieSoort: Incasso", record);
