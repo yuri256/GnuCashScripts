@@ -1,7 +1,6 @@
 package com.github.yuri256.gnucashscripts.fileconvertor;
 
 import com.github.yuri256.gnucashscripts.impl.abn.model.AbnConstants;
-import com.github.yuri256.gnucashscripts.impl.ing.model.IngConstants;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,9 +27,7 @@ public class DescriptionFilterFunction implements Function<String, String> {
     public DescriptionFilterFunction(Set<String> removeFieldKeys, Set<String> removeKeyKeys) {
         this.removeFieldKeys = Collections.unmodifiableSet(removeFieldKeys);
         keysWithSpace = Stream.concat(
-                Stream.concat(
-                        IngConstants.KNOWN_FIELDS_WITH_SPACE.stream(),
-                        AbnConstants.KNOWN_FIELDS_WITH_SPACE.stream()),
+                        AbnConstants.KNOWN_KEYS_WITH_SPACE.stream(),
                 this.removeFieldKeys.stream().filter(it -> it.contains(" "))
         ).collect(Collectors.toUnmodifiableSet());
         this.removeKeyKeys = removeKeyKeys;
@@ -100,7 +97,7 @@ public class DescriptionFilterFunction implements Function<String, String> {
             sb.append(key).append(": ");
         }
         sb.append(value);
-        if (!value.equals("")) {
+        if (!value.isEmpty()) {
             sb.append(" ");
         }
     }

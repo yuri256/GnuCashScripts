@@ -6,110 +6,110 @@ import com.opencsv.bean.CsvCustomBindByName;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
 public class IngRecord {
-    @CsvBindByName(column = "Datum", required = true)
-    private String datum;
+    @CsvBindByName(column = "Date", required = true)
+    private String date;
 
-    @CsvBindByName(column = "Naam / Omschrijving", required = true)
-    private String naamOmschrijving; // nameDescription
+    @CsvBindByName(column = "Name / Description", required = true)
+    private String nameDescription;
 
-    @CsvBindByName(column = "Rekening", required = true)
-    private String rekening; // account
+    @CsvBindByName(column = "Account", required = true)
+    private String account;
 
-    @CsvBindByName(column = "Tegenrekening")
-    private String tegenRekening; // opposite? account
+    @CsvBindByName(column = "Counterparty")
+    private String counterparty;
 
     @CsvBindByName(column = "Code", required = true)
-    private String code; // code: GT, BA, IC
+    private String code; // GT, BA, IC
 
-    @CsvCustomBindByName(converter = AfBijAbstractBeanField.class,column = "Af Bij", required = true)
-    private AfBij afBij; // out/in
+    @CsvCustomBindByName(converter = DebitCreditBeanField.class,column = "Debit/credit", required = true)
+    private DebitCredit debitCredit;
 
-    @CsvBindByName(column = "Bedrag (EUR)", required = true)
-    private String bedragEUR; // amount EUR
+    @CsvBindByName(column = "Amount (EUR)", required = true)
+    private String amountEUR;
 
-    @CsvBindByName(column = "MutatieSoort", required = true)
-    private String mutatieSoort; // change type: Online bankieren, Betaalautomaat, Incasso
+    @CsvBindByName(column = "Transaction type", required = true)
+    private String transactionType; // Online Banking, Payment terminal, SEPA direct debit, Various, iDEAL
 
-    @CsvBindByName(column = "Mededelingen", required = true)
-    private String mededelingen; // statement, notice
+    @CsvBindByName(column = "Notifications", required = true)
+    private String notifications; // statement, notice
 
-    @CsvBindByName(column = "Saldo na mutatie", required = true)
-    private String saldoNaMutatie; // saldo after mutation
+    @CsvBindByName(column = "Resulting balance", required = true)
+    private String resultingBalance;
 
-    @CsvBindByName(column = "Tag")
+    @CsvBindByName(column = "Tag", required = true)
     private String tag;
 
     public IngRecord() {
         // deserializer
     }
 
-    public IngRecord(String datum, String naamOmschrijving, String rekening, String tegenRekening, String code, AfBij afBij, String bedragEUR, String mutatieSoort, String mededelingen) {
-        this.datum = datum;
-        this.naamOmschrijving = naamOmschrijving;
-        this.rekening = rekening;
-        this.tegenRekening = tegenRekening;
+    public IngRecord(String date, String nameDescription, String account, String counterparty, String code, DebitCredit debitCredit, String amountEUR, String transactionType, String notifications) {
+        this.date = date;
+        this.nameDescription = nameDescription;
+        this.account = account;
+        this.counterparty = counterparty;
         this.code = code;
-        this.afBij = afBij;
-        this.bedragEUR = bedragEUR;
-        this.mutatieSoort = mutatieSoort;
-        this.mededelingen = mededelingen;
+        this.debitCredit = debitCredit;
+        this.amountEUR = amountEUR;
+        this.transactionType = transactionType;
+        this.notifications = notifications;
     }
 
-    public String getDatum() {
-        return datum;
+    public String getDate() {
+        return date;
     }
 
-    public String getNaamOmschrijving() {
-        return naamOmschrijving;
+    public String getNameDescription() {
+        return nameDescription;
     }
 
-    public String getRekening() {
-        return rekening;
+    public String getAccount() {
+        return account;
     }
 
-    public String getTegenRekening() {
-        return tegenRekening;
+    public String getCounterparty() {
+        return counterparty;
     }
 
     public String getCode() {
         return code;
     }
 
-    public AfBij getAfBij() {
-        return afBij;
+    public DebitCredit getDebitCredit() {
+        return debitCredit;
     }
 
-    public String getBedragEUR() {
-        return bedragEUR;
+    public String getAmountEUR() {
+        return amountEUR;
     }
 
-    public String getMutatieSoort() {
-        return mutatieSoort;
+    public String getTransactionType() {
+        return transactionType;
     }
 
-    public String getMededelingen() {
-        return mededelingen;
+    public String getNotifications() {
+        return notifications;
     }
 
-    public String getSaldoNaMutatie() {
-        return saldoNaMutatie;
+    public String getResultingBalance() {
+        return resultingBalance;
     }
 
     public String getTag() {
         return tag;
     }
 
-    public static class AfBijAbstractBeanField extends AbstractBeanField<AfBij> {
+    public static class DebitCreditBeanField extends AbstractBeanField<DebitCredit> {
 
         @Override
-        protected AfBij convert(String value) throws CsvDataTypeMismatchException {
+        protected DebitCredit convert(String value) throws CsvDataTypeMismatchException {
             if (value == null) {
                 return null;
             }
             try {
-                return AfBij.valueOf(value);
+                return DebitCredit.valueOf(value);
             } catch (IllegalArgumentException e) {
-                throw new CsvDataTypeMismatchException(value, AfBij.class,"Could not convert to enum");
+                throw new CsvDataTypeMismatchException(value, DebitCredit.class,"Could not convert value '" + value + "' to enum");
             }
         }
 
@@ -117,15 +117,17 @@ public class IngRecord {
     @Override
     public String toString() {
         return "Record{" +
-                "datum='" + datum + '\'' +
-                ", naamOmschrijving='" + naamOmschrijving + '\'' +
-                ", rekening='" + rekening + '\'' +
-                ", tegenRekening='" + tegenRekening + '\'' +
+                "date='" + date + '\'' +
+                ", nameDescription='" + nameDescription + '\'' +
+                ", account='" + account + '\'' +
+                ", counterparty='" + counterparty + '\'' +
                 ", code='" + code + '\'' +
-                ", afBij='" + afBij + '\'' +
-                ", bedragEUR='" + bedragEUR + '\'' +
-                ", mutatieSoort='" + mutatieSoort + '\'' +
-                ", mededelingen='" + mededelingen + '\'' +
+                ", debitCredit='" + debitCredit + '\'' +
+                ", amountEUR='" + amountEUR + '\'' +
+                ", transactionType='" + transactionType + '\'' +
+                ", notifications='" + notifications + '\'' +
+                ", resultingBalance='" + resultingBalance + '\'' +
+                ", tag='" + tag + '\'' +
                 '}';
     }
 }
