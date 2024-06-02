@@ -36,7 +36,7 @@ public class IngRecord {
     @CsvBindByName(column = "Resulting balance", required = true)
     private String resultingBalance;
 
-    @CsvBindByName(column = "Tag", required = true)
+    @CsvBindByName(column = "Tag", required = false)
     private String tag;
 
     public IngRecord() {
