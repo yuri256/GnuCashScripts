@@ -50,6 +50,9 @@ public class IngDescriptionConverter implements Function<IngRecord, String> {
 
         sb.append(" ").append(IngConstants.OUT_COUNTER_PARTY).append(": ").append(ingRecord.getCounterparty());
         sb.append(" ").append(IngConstants.OUT_TRANSACTION_TYPE).append(": ").append(ingRecord.getTransactionType());
+        if (ingRecord.getTag() != null && !ingRecord.getTag().isBlank()) {
+            sb.append(" ").append(IngConstants.OUT_TAG).append(": ").append(ingRecord.getTag());
+        }
         return sb.toString();
     }
 

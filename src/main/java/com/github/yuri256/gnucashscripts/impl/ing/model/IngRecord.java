@@ -43,7 +43,7 @@ public class IngRecord {
         // deserializer
     }
 
-    public IngRecord(String date, String nameDescription, String account, String counterparty, String code, DebitCredit debitCredit, String amountEUR, String transactionType, String notifications) {
+    public IngRecord(String date, String nameDescription, String account, String counterparty, String code, DebitCredit debitCredit, String amountEUR, String transactionType, String notifications, String tag) {
         this.date = date;
         this.nameDescription = nameDescription;
         this.account = account;
@@ -53,6 +53,7 @@ public class IngRecord {
         this.amountEUR = amountEUR;
         this.transactionType = transactionType;
         this.notifications = notifications;
+        this.tag = tag;
     }
 
     public String getDate() {

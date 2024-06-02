@@ -49,6 +49,8 @@ public final class IngConstants {
     public static final String OUT_COUNTER_PARTY = "Counterparty";
     public static final String OUT_DATE_TIME = "DateTime";
     public static final String OUT_NAME_DESCRIPTION = "NameDescription";
+    public static final String OUT_TAG = "Tag";
+
     public static final String TRANSACTION_TYPE_PAYMENT_TERMINAL = "Payment terminal";
     public static final String TRANSACTION_TYPE_CASH_MACHINE = "Cash machine";
 
