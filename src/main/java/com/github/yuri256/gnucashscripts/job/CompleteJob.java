@@ -29,26 +29,27 @@ public class CompleteJob {
         final File jobDir = getJobDir();
 
         final File inDir = getInDir(jobDir);
-        final File outDir = getOutDir(jobDir);
         final File doneDir = getDoneDir(jobDir);
+        final File outDir = getOutDir(jobDir, nextJobDirName, baseDir);
 
         try {
             Files.list(inDir.toPath()).forEach(inPath -> {
                 try {
                     System.out.println("Processing file " + inPath.toString());
 
-                    final Path outPath = outDir.toPath().resolve(inPath.getFileName());
                     final Path donePath = doneDir.toPath().resolve(inPath.getFileName());
-                    if(donePath.toFile().exists()) {
-                        System.out.println("File already processed, will skip. " + outPath.getFileName());
+                    if (donePath.toFile().exists()) {
+                        System.out.println("File already processed, will skip. (File " + donePath.getFileName() + " exists)");
                         return;
                     }
 
+                    String fileName = inPath.getFileName().toString();
+                    var fileNameNoExt = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
+                    final Path outPath = outDir.toPath().resolve(fileNameNoExt + ".mt940");
                     fileConverter.apply(inPath, outPath);
+                    System.out.println("Output written to " + outPath);
 
                     Files.move(inPath, donePath);
-
-                    copyResultToNextJobInDir(outPath);
                 } catch (IOException e) {
                     // TODO FIX exception handling in streams
                     throw new RuntimeException(e);
@@ -65,29 +66,21 @@ public class CompleteJob {
         return getExistingDir(baseDirFile, jobDirName);
     }
 
-    private void copyResultToNextJobInDir(Path outPath) {
-        if (nextJobDirName == null) {
-            return;
-        }
-        Path nextJobDirPath = Paths.get(baseDir, nextJobDirName);
-        checkExists(nextJobDirPath.toFile());
-
-        File nextJobInDir = getInDir(nextJobDirPath.toFile());
-        try {
-            Files.copy(outPath, nextJobInDir.toPath().resolve(outPath.getFileName()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static void checkExists(File jobDir) {
         if (!jobDir.exists()) {
             throw new RuntimeException("Dir does not exist: " + jobDir);
         }
     }
 
-    static File getOutDir(File jobDir) {
-        return getExistingDir(jobDir, OUT);
+    public static File getOutDir(File jobDir, String nextJobDirName1, String baseDir1) {
+        if (nextJobDirName1 == null) {
+            return getExistingDir(jobDir, OUT);
+        }
+
+        Path nextJobDirPath = Paths.get(baseDir1, nextJobDirName1);
+        checkExists(nextJobDirPath.toFile());
+
+        return getInDir(nextJobDirPath.toFile());
     }
 
     public static File getDoneDir(File jobDir) {
