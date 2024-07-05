@@ -1,6 +1,7 @@
 package com.github.yuri256.gnucashscripts.config;
 
 import com.github.yuri256.gnucashscripts.impl.abn.model.AbnConstants;
+import com.github.yuri256.gnucashscripts.impl.bunq.model.BunqConstants;
 import com.github.yuri256.gnucashscripts.impl.ing.model.IngConstants;
 
 public enum Property {
@@ -10,6 +11,9 @@ public enum Property {
     ING_JOB_DIR_NAME("ingDirName", "ing"),
     ING_SKIP_FIELD_KEYS("ingSkipFields", String.join(",", IngConstants.DEFAULT_SKIP_FIELD_KEYS)),
     ING_SKIP_KEY_KEYS("ingSkipKeys", String.join(",", IngConstants.DEFAULT_SKIP_KEY_KEYS)),
+    BUNQ_JOB_DIR_NAME("bunqDirName", "bunq"),
+    BUNQ_SKIP_FIELD_KEYS("bunqSkipFields", String.join(",", BunqConstants.DEFAULT_SKIP_FIELD_KEYS)),
+    BUNQ_SKIP_KEY_KEYS("bunqSkipKeys", String.join(",", BunqConstants.DEFAULT_SKIP_KEY_KEYS)),
     ABN_JOB_DIR_NAME("abnDirName", "abn"),
     ABN_SKIP_FIELD_KEYS("abnSkipFields", String.join(",", AbnConstants.DEFAULT_SKIP_FIELD_KEYS)),
     ABN_SKIP_KEY_KEYS("abnSkipKeys", String.join(",", AbnConstants.DEFAULT_SKIP_KEY_KEYS));

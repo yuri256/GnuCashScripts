@@ -10,6 +10,7 @@ import picocli.CommandLine;
         , Abn.class
         , AbnFile.class
         , Done.class
+        , Bunq.class
 })
 public class Dispatcher implements Runnable {
     @CommandLine.Spec

@@ -3,10 +3,13 @@ package com.github.yuri256.gnucashscripts.cli.action;
 import com.github.yuri256.gnucashscripts.config.Config;
 import com.github.yuri256.gnucashscripts.config.Property;
 import com.github.yuri256.gnucashscripts.impl.abn.job.AbnJobFactory;
+import com.github.yuri256.gnucashscripts.impl.bunq.job.BunqJobFactory;
 import com.github.yuri256.gnucashscripts.impl.ing.job.IngJobFactory;
 import picocli.CommandLine;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,6 +20,7 @@ import java.util.regex.Pattern;
 public class Move implements Runnable {
 
     private static final Pattern ING_FILENAME_PATTERN = Pattern.compile("^NL\\d{2}INGB\\d{10}_(\\d{2}-\\d{2}-\\d{4})_(\\d{2}-\\d{2}-\\d{4})\\.csv$");
+    private static final Pattern BUNQ_FILENAME_PATTERN = Pattern.compile("^(\\d{4}-\\d{2}-\\d{2})\\s(\\d{4}-\\d{2}-\\d{2})\\s-\\sExport Statement.*\\.csv$");
 
     @Override
     public void run() {
@@ -43,25 +47,46 @@ public class Move implements Runnable {
         }
 
         Path ingInDir = IngJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
+        Path bunqInDir = BunqJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
         Path abnInDir = AbnJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
 
         try {
             Files.list(downloadsDirFile.toPath()).forEach(path -> {
                 String fileName = path.getFileName().toString();
-                Matcher matcher = ING_FILENAME_PATTERN.matcher(fileName);
-                if (matcher.matches()) {
+                Matcher filenameMatcher;
+
+                // ING
+                filenameMatcher = ING_FILENAME_PATTERN.matcher(fileName);
+                if (filenameMatcher.matches()) {
                     try {
-                        String targetFileName = "ing_" + fileName.substring(0, 18) + "_" + flipDateIng(matcher.group(1)) + "_" + flipDateIng(matcher.group(2)) + ".csv";
+                        String targetFileName = "ing_" + fileName.substring(0, 18) + "_" + flipDateIng(filenameMatcher.group(1)) + "_" + flipDateIng(filenameMatcher.group(2)) + ".csv";
                         Path targetPath = ingInDir.resolve(targetFileName);
                         System.out.println("Moving " + path + " to " + targetPath);
                         Files.move(path, targetPath);
                     } catch (IOException e) {
                         System.out.println("Could not move file " + path + " to " + ingInDir + ": " + e);
                     }
+                    return;
                 }
 
-                if (fileName.startsWith("MT940")
-                        && fileName.endsWith(".STA")) {
+                // BUNQ
+                filenameMatcher = BUNQ_FILENAME_PATTERN.matcher(fileName);
+                if (filenameMatcher.matches()) {
+                    try {
+                        String accountCode = getBunqAccountCode(path);
+                        String targetFileName = "bunq_" + accountCode + "_" + filenameMatcher.group(1) + "_" + filenameMatcher.group(2) + ".csv";
+                        Path targetPath = bunqInDir.resolve(targetFileName);
+                        System.out.println("Moving " + path + " to " + targetPath);
+                        Files.move(path, targetPath);
+                    } catch (IOException e) {
+                        System.out.println("Could not move file " + path + " to " + ingInDir + ": " + e);
+                    }
+                    return;
+                }
+
+
+                // ABN
+                if (fileName.startsWith("MT940") && fileName.endsWith(".STA")) {
                     System.out.println("abn = " + path);
                     try {
                         Files.move(path, abnInDir.resolve(path.getFileName()));
@@ -72,6 +97,25 @@ public class Move implements Runnable {
             });
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Extract account code as IBAN from the second line
+     */
+    private String getBunqAccountCode(Path path) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
+            String line = "";
+            for (int i = 0; i < 2; i++) {
+                line = reader.readLine();
+                // empty or no record files should be ok at this stage
+                if (line == null) {
+                    return "";
+                }
+            }
+            var separator = line.contains("\";\"") ? "\";\"" : "\",\"";
+            // IBAN is the 4th field of csv
+            return line.split(separator)[3];
         }
     }
 
