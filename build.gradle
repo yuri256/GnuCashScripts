@@ -2,10 +2,10 @@ apply plugin: 'java'
 apply plugin: 'wrapper'
 
 repositories {
-   jcenter()
+    jcenter()
 }
 
-compileJava   {
+compileJava {
     sourceCompatibility = '11'
     targetCompatibility = '11'
 }
@@ -15,7 +15,7 @@ dependencies {
     implementation 'com.opencsv:opencsv:4.0' // csv parsing
     implementation 'info.picocli:picocli:4.2.0' // command line parsing
 
-   testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
+    testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
 }
 
 jar {
@@ -29,27 +29,27 @@ jar {
     }
     // TODO fix later
     duplicatesStrategy DuplicatesStrategy.WARN
- }
+}
 
-task deploy {
+tasks.register("deploy") {
     dependsOn ':deployJar'
     dependsOn ':deployScript'
     dependsOn ':deployConfigExample'
 }
 
-task deployJar(type: Copy) {
+tasks.register("deployJar", Copy) {
     dependsOn jar
     from file("$buildDir/libs/${project.name}.jar")
     into file("${System.properties.'os.name'.toLowerCase().contains("win") ? System.env.USERPROFILE : System.env.HOME}/bin/")
 }
 
-task deployScript(type: Copy) {
+tasks.register("deployScript", Copy) {
     from file("$projectDir/deployment")
     into file("${System.properties.'os.name'.toLowerCase().contains("win") ? System.env.USERPROFILE : System.env.HOME}/bin")
     fileMode 0755
 }
 
-task deployConfigExample(type: Copy) {
+tasks.register("deployConfigExample", Copy) {
     from file("$projectDir/conf/gnuCashScripts.conf.example")
     into file("${System.properties.'os.name'.toLowerCase().contains("win") ? System.env.USERPROFILE : System.env.HOME}/.config/gnuCashScripts")
 }
