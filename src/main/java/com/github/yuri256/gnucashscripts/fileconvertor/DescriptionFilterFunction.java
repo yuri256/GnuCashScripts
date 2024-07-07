@@ -27,7 +27,7 @@ public class DescriptionFilterFunction implements Function<String, String> {
     public DescriptionFilterFunction(Set<String> removeFieldKeys, Set<String> removeKeyKeys) {
         this.removeFieldKeys = Collections.unmodifiableSet(removeFieldKeys);
         keysWithSpace = Stream.concat(
-                        AbnConstants.KNOWN_KEYS_WITH_SPACE.stream(),
+                AbnConstants.KNOWN_KEYS_WITH_SPACE.stream(),
                 this.removeFieldKeys.stream().filter(it -> it.contains(" "))
         ).collect(Collectors.toUnmodifiableSet());
         this.removeKeyKeys = removeKeyKeys;
@@ -54,10 +54,6 @@ public class DescriptionFilterFunction implements Function<String, String> {
         String key = null;
         for (int i = 0; i < split.length; i++) {
             String token = split[i].trim();
-            if (i == 0) {
-                key = token;
-                continue;
-            }
 
             boolean lastToken = (i == split.length - 1);
             if (lastToken) {
@@ -90,6 +86,12 @@ public class DescriptionFilterFunction implements Function<String, String> {
     }
 
     private void addPair(StringBuilder sb, String key, String value) {
+        if (key == null) {
+            if (!value.isEmpty()) {
+                sb.append(value).append(" ");
+            }
+            return;
+        }
         if (removeFieldKeys.contains(key)) {
             return;
         }

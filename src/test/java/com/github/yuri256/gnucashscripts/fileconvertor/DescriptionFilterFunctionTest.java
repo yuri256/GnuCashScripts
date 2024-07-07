@@ -87,6 +87,11 @@ class DescriptionFilterFunctionTest {
         Assertions.assertEquals("Key1: value one value two Key3: value three", createFilterFunction().apply("Key1: value one Name/Description: value two Key3: value three"));
     }
 
+    @Test
+    public void testRemoveKeyIsRemovedValueRemainsMiddlePosition11() {
+        Assertions.assertEquals("Some text without key some description", createFilterFunction().apply("Some text without key Description: some description"));
+    }
+
     private DescriptionFilterFunction createFilterFunction() {
         return new DescriptionFilterFunction(Set.of("Reference", "Creditor ID"), Set.of("Name", "Description", "Name/Description"));
     }
