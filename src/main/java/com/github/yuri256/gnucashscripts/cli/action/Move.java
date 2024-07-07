@@ -89,7 +89,7 @@ public class Move implements Runnable {
                 if (fileName.startsWith("MT940") && fileName.endsWith(".STA")) {
                     System.out.println("abn = " + path);
                     try {
-                        Files.move(path, abnInDir.resolve(path.getFileName()));
+                        Files.move(path, abnInDir.resolve("abn_" + path.getFileName()));
                     } catch (IOException e) {
                         System.out.println("Could not move file " + path + " to " + abnInDir + ": " + e);
                     }
