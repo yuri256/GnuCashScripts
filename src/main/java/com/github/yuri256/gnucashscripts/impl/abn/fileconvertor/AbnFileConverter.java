@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Abn format has 3 extra lines before each record. Example:
  * ABNANL2A
@@ -73,10 +74,14 @@ public class AbnFileConverter implements FileConverter {
 
                 if (statementBlockEnded) {
                     writer.write(STATEMENT_BLOCK_PREFX);
-                    updateTerminalPaymentLine(statementLines);
-                    String statement = modify(String.join(" ", statementLines));
-                    String filteredStatement = filterFunction.apply(statement);
-                    writer.write(filteredStatement);
+                    String statement = String.join(" ", statementLines).replaceAll("\\s+", " ").trim();
+                    var isTerminalPayment = statement.matches("^BEA,*\\s.*$");
+                    if (isTerminalPayment) {
+                        statement = patchTerminalPayment(statement);
+                    }
+                    statement = patchStatement(statement);
+                    statement = filterFunction.apply(statement);
+                    writer.write(statement);
                     newLine(writer);
                     statementBlockEnded = false;
                     statementLines = new ArrayList<>();
@@ -90,49 +95,27 @@ public class AbnFileConverter implements FileConverter {
     }
 
     // Parses and removed not deeded fields from terminal payment statement line
-    // Example line: "BEA NR:22N6J5 01.12.20/10.33 ALBERT HEIJN 1234,PAS123"
-    private void updateTerminalPaymentLine(List<String> statementLines) {
-        if (statementLines.isEmpty()) {
-            return;
-        }
-        String line = statementLines.get(0);
-        if (!line.startsWith("BEA ")) {
-            return;
-        }
-        String[] split = line.replaceAll("\\s+", " ").split(" ");
-        if (split.length < 4) {
-            System.out.println("Unknown terminal payment line format (element count). Will skip parsing.");
-            return;
-        }
-        // Elements 0 and 1 are skipped - useless.
-        // Element 2 - date - will be added in the end.
-        // Last element skipped - will be treated separately
-        StringBuilder sb = new StringBuilder();
-        for (int i = 3; i < split.length - 1; i++) {
-            sb.append(split[i]).append(" ");
-        }
-        // The last element: remove PASxxx part from it
-        String lastElement = split[split.length - 1];
-        String[] lastElementSplit = lastElement.split(",");
-        if (lastElementSplit.length != 2) {
-            System.out.println("Unknown terminal payment line format (last element). Will skip parsing.");
-            return;
-        }
-        sb.append(lastElementSplit[0]).append(" ");
+    // Example line: "BEA NR:22N6J5 01.12.20/10.33 ALBERT HEIJN 1234,PAS123 CITY"
+    // Example line: "BEA, BETAALPAS CCV*CHEMISCH BEMISCH,PAS123 NR:AB123456, 01.01.21/12:01 CITY
+    private String patchTerminalPayment(String statement) {
+        String line = statement;
 
-        // The date is added last
-        sb.append(split[2]);
-        statementLines.set(0, sb.toString());
+        line = line.replaceAll("BEA,*\\s", " ");
+        line = line.replaceAll("NR:\\S*\\s", " ");
+        line = line.replaceAll(",PAS\\d+", " ");
+        line = line.replaceAll("BETAALPAS\\s", " ");
+
+        return line;
     }
 
     private void newLine(BufferedWriter writer) throws IOException {
         writer.write("\n");
     }
 
-    private String modify(String line) {
-        // GnuCash uses bayesian analysis to match account, but AFAIK it doesn't treat slash as separator for tokens,
-        // so splitting with space manually
-        // Using semicolon to be more inline with ING import
+    private String patchStatement(String line) {
+        // GnuCash uses bayesian analysis to match account and it doesn't treat slash as separator for tokens,
+        // so replacing it with space to separate key-value pairs and colon to separate key and value.
+        // This makes it somilar to the ING format
         return line.replace("/TRTP/", " TRTP: ")
                 .replace("/CSID/", " CSID: ")
                 .replace("/NAME/", " NAME: ")

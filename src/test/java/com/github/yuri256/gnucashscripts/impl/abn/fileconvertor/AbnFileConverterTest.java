@@ -19,6 +19,7 @@ class AbnFileConverterTest {
             , "abnMultilineExample.mta,abnMultilineExampleExpected.mta"
             , "abnSpaces.mta,abnSpacesExpected.mta"
             , "abnTerminalPayment.mta,abnTerminalPaymentExpected.mta"
+            , "abnTerminalPaymentComma.mta,abnTerminalPaymentCommaExpected.mta"
     })
     void processExampleFile(String inputFileName, String expectedFileName) throws URISyntaxException, IOException {
         // GIVEN
