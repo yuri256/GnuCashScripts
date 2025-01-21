@@ -14,6 +14,9 @@ public enum Property {
     BUNQ_JOB_DIR_NAME("bunqDirName", "bunq"),
     BUNQ_SKIP_FIELD_KEYS("bunqSkipFields", String.join(",", BunqConstants.DEFAULT_SKIP_FIELD_KEYS)),
     BUNQ_SKIP_KEY_KEYS("bunqSkipKeys", String.join(",", BunqConstants.DEFAULT_SKIP_KEY_KEYS)),
+    REVOLUT_JOB_DIR_NAME("revolutDirName", "revolut"),
+    REVOLUT_SKIP_FIELD_KEYS("revolutSkipFields", String.join(",", BunqConstants.DEFAULT_SKIP_FIELD_KEYS)),
+    REVOLUT_SKIP_KEY_KEYS("revolutSkipKeys", String.join(",", BunqConstants.DEFAULT_SKIP_KEY_KEYS)),
     ABN_JOB_DIR_NAME("abnDirName", "abn"),
     ABN_SKIP_FIELD_KEYS("abnSkipFields", String.join(",", AbnConstants.DEFAULT_SKIP_FIELD_KEYS)),
     ABN_SKIP_KEY_KEYS("abnSkipKeys", String.join(",", AbnConstants.DEFAULT_SKIP_KEY_KEYS));

@@ -5,6 +5,7 @@ import com.github.yuri256.gnucashscripts.config.Property;
 import com.github.yuri256.gnucashscripts.impl.abn.job.AbnJobFactory;
 import com.github.yuri256.gnucashscripts.impl.bunq.job.BunqJobFactory;
 import com.github.yuri256.gnucashscripts.impl.ing.job.IngJobFactory;
+import com.github.yuri256.gnucashscripts.impl.revolut.job.RevolutJobFactory;
 import picocli.CommandLine;
 
 import java.io.BufferedReader;
@@ -21,6 +22,7 @@ public class Move implements Runnable {
 
     private static final Pattern ING_FILENAME_PATTERN = Pattern.compile("^NL\\d{2}INGB\\d{10}_(\\d{2}-\\d{2}-\\d{4})_(\\d{2}-\\d{2}-\\d{4})\\.csv$");
     private static final Pattern BUNQ_FILENAME_PATTERN = Pattern.compile("^(\\d{4}-\\d{2}-\\d{2})\\s(\\d{4}-\\d{2}-\\d{2})\\s-\\sExport Statement.*\\.csv$");
+    private static final Pattern REVOLUT_FILENAME_PATTERN = Pattern.compile("^account-statement_\\d{4}-\\d{2}-\\d{2}_\\d{4}-\\d{2}-\\d{2}_.*\\.csv$");
 
     @Override
     public void run() {
@@ -48,6 +50,7 @@ public class Move implements Runnable {
 
         Path ingInDir = IngJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
         Path bunqInDir = BunqJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
+        Path revolutInDir = RevolutJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
         Path abnInDir = AbnJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
 
         try {
@@ -84,6 +87,19 @@ public class Move implements Runnable {
                     return;
                 }
 
+                // REVOLUT
+                filenameMatcher = REVOLUT_FILENAME_PATTERN.matcher(fileName);
+                if (filenameMatcher.matches()) {
+                    try {
+                        String targetFileName = "revolut_" + fileName.substring(18);
+                        Path targetPath = revolutInDir.resolve(targetFileName);
+                        System.out.println("Moving " + path + " to " + targetPath);
+                        Files.move(path, targetPath);
+                    } catch (IOException e) {
+                        System.out.println("Could not move file " + path + " to " + ingInDir + ": " + e);
+                    }
+                    return;
+                }
 
                 // ABN
                 if (fileName.startsWith("MT940") && fileName.endsWith(".STA")) {
