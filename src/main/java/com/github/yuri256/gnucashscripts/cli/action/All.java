@@ -11,5 +11,6 @@ public class All implements Runnable {
         new Abn().run();
         new Ing().run();
         new Bunq().run();
+        new Revolut().run();
     }
 }

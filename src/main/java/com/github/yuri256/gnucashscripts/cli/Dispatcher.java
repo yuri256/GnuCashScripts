@@ -11,6 +11,7 @@ import picocli.CommandLine;
         , AbnFile.class
         , Done.class
         , Bunq.class
+        , Revolut.class
         , All.class
 })
 public class Dispatcher implements Runnable {
