@@ -3,6 +3,7 @@ package com.github.yuri256.gnucashscripts.cli.action;
 import com.github.yuri256.gnucashscripts.config.Config;
 import com.github.yuri256.gnucashscripts.config.Property;
 import com.github.yuri256.gnucashscripts.impl.abn.job.AbnJobFactory;
+import com.github.yuri256.gnucashscripts.impl.abntxt.job.AbnTxtJobFactory;
 import com.github.yuri256.gnucashscripts.impl.bunq.job.BunqJobFactory;
 import com.github.yuri256.gnucashscripts.impl.ing.job.IngJobFactory;
 import com.github.yuri256.gnucashscripts.impl.ingsavings.job.IngSavingsJobFactory;
@@ -25,6 +26,7 @@ public class Move implements Runnable {
     private static final Pattern ING_SAVINGS_FILENAME_PATTERN = Pattern.compile("^Alle_rekeningen_(\\d{2}-\\d{2}-\\d{4})_(\\d{2}-\\d{2}-\\d{4})\\.csv$");
     private static final Pattern BUNQ_FILENAME_PATTERN = Pattern.compile("^(\\d{4}-\\d{2}-\\d{2})\\s(\\d{4}-\\d{2}-\\d{2})\\s-\\sExport Statement.*\\.csv$");
     private static final Pattern REVOLUT_FILENAME_PATTERN = Pattern.compile("^account-statement_\\d{4}-\\d{2}-\\d{2}_\\d{4}-\\d{2}-\\d{2}_.*\\.csv$");
+    private static final Pattern ABN_TXT_FILENAME_PATTERN = Pattern.compile("^TXT(\\d{6})(\\d{6})\\.TAB$");
 
     @Override
     public void run() {
@@ -55,6 +57,7 @@ public class Move implements Runnable {
         Path bunqInDir = BunqJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
         Path revolutInDir = RevolutJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
         Path abnInDir = AbnJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
+        Path abnTxtInDir = AbnTxtJobFactory.createCompleteJob(Config.load()).getInDir().toPath();
 
         try {
             Files.list(downloadsDirFile.toPath()).forEach(path -> {
@@ -121,10 +124,25 @@ public class Move implements Runnable {
                 // ABN
                 if (fileName.startsWith("MT940") && fileName.endsWith(".STA")) {
                     System.out.println("abn = " + path);
+                    String date = fileName.substring(5,11);
+                    String time = fileName.substring(11,17);
                     try {
-                        Files.move(path, abnInDir.resolve("abn_" + path.getFileName()));
+                        Files.move(path, abnInDir.resolve("abn_20" + date + "_" + time + ".STA"));
                     } catch (IOException e) {
                         System.out.println("Could not move file " + path + " to " + abnInDir + ": " + e);
+                    }
+                }
+
+                // ABN TXT (.TAB)
+                filenameMatcher = ABN_TXT_FILENAME_PATTERN.matcher(fileName);
+                if (filenameMatcher.matches()) {
+                    try {
+                        String targetFileName = "abn_20" + filenameMatcher.group(1) + "_" + filenameMatcher.group(2) + ".TAB";
+                        Path targetPath = abnTxtInDir.resolve(targetFileName);
+                        System.out.println("Moving " + path + " to " + targetPath);
+                        Files.move(path, targetPath);
+                    } catch (IOException e) {
+                        System.out.println("Could not move file " + path + " to " + ingInDir + ": " + e);
                     }
                 }
             });

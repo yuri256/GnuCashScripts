@@ -21,6 +21,7 @@ public enum Property {
     REVOLUT_SKIP_FIELD_KEYS("revolutSkipFields", String.join(",", BunqConstants.DEFAULT_SKIP_FIELD_KEYS)),
     REVOLUT_SKIP_KEY_KEYS("revolutSkipKeys", String.join(",", BunqConstants.DEFAULT_SKIP_KEY_KEYS)),
     ABN_JOB_DIR_NAME("abnDirName", "abn"),
+    ABN_TXT_JOB_DIR_NAME("abnTxtDirName", "abnTxt"),
     ABN_SKIP_FIELD_KEYS("abnSkipFields", String.join(",", AbnConstants.DEFAULT_SKIP_FIELD_KEYS)),
     ABN_SKIP_KEY_KEYS("abnSkipKeys", String.join(",", AbnConstants.DEFAULT_SKIP_KEY_KEYS));
 
