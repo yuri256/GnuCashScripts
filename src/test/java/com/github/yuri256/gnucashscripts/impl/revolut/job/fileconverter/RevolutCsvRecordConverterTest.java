@@ -131,7 +131,7 @@ class RevolutCsvRecordConverterTest {
         MyMt940Record result = converter.apply(input);
 
         Assertions.assertEquals("ProductX_GBP", result.getMT940().getField25().getValue());
-        Assertions.assertEquals("New Shoes CARD_PAYMENT", result.getMT940().getField86().get(0).getValue());
+        Assertions.assertEquals("16:01 CARD_PAYMENT New Shoes", result.getMT940().getField86().get(0).getValue());
         Assertions.assertEquals("230501D1,23NTRFNONREF", result.getMT940().getField61().get(0).getValue());
     }
 }
